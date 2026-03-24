@@ -1,6 +1,7 @@
 package ejeHashMap4;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,9 @@ public class Eje04HasMAP {
 		
 		
 		String msgDefault ="Lo siento, no te comprendo";
+		String msgBloqueado = "No eres muy educado";
+		
+		var listaPalabraBloquear = new ArrayList <String>(Arrays.asList("caca","culo","nigga"));
 		System.out.println("Bienvenido al sistema ELIZA");
 		
 		String frase;
@@ -28,21 +32,31 @@ public class Eje04HasMAP {
 		
 		do {
 			frase=sc.nextLine();
-	
-			boolean encontrar=false;
-			for(String clave:diccionario.keySet()) {
-				
-				if(frase.toUpperCase().contains(clave)) {
-					encontrar=true;
-					System.out.println(diccionario.get(clave));
-					if(frase.toUpperCase().contains("ADIOS")) {
-						fin=true;
-					}
+			boolean correcto=true;
+			for (String valor: listaPalabraBloquear) {
+				if(frase.contains(valor)) {
+					System.out.println(msgBloqueado + " >" +valor.toUpperCase()+"<");
 					break;
+				}
+			}
+			
+			
+			boolean encontrar=false;
+			if (correcto) {
+				for(String clave:diccionario.keySet()) {
+					
+					if(frase.toUpperCase().contains(clave)) {
+						encontrar=true;
+						System.out.println(diccionario.get(clave));
+						if(frase.toUpperCase().contains("ADIOS")) {
+							fin=true;
+						}
+						break;
+						
+					}
+					
 					
 				}
-				
-				
 			}
 			if (!encontrar) {
 				System.out.println("No te comprendo");
@@ -53,58 +67,6 @@ public class Eje04HasMAP {
 	
 		
 		
-	}
-
-	
-	/*private static ArrayList<String> obtenerFrase(HashMap<String, String> diccionario, int numPalabras) {
-		var listaPrimera = new ArrayList <String>(diccionario.keySet());
-		var listaSeleccionada = new ArrayList <String>();
-		
-		for (int i =0; i <=numPalabras;i++) {
-			
-			int posicion =i;
-			String palabra= listaPrimera.get(posicion);
-			if(!listaSeleccionada.contains(palabra)) {
-				listaSeleccionada.add(palabra);
-			
-			}
-			
-			
-			
-		}
-		return listaSeleccionada;
-	}*/
-
-	private static ArrayList<String> obtenerPalabras(HashMap<String, String> diccionario, int numPalabras) {
-		var listaPrimera = new ArrayList <String>(diccionario.keySet());
-		var listaSeleccionada = new ArrayList <String>();
-
-		
-		var rd = new Random();
-		for (int i =1; i <=numPalabras;i++) {
-			boolean nueva=false;
-			do {
-			int posicion =rd.nextInt(listaPrimera.size());
-			String palabra= listaPrimera.get(posicion);
-			if(!listaSeleccionada.contains(palabra)) {
-				listaSeleccionada.add(palabra);
-				nueva = true;
-			}
-			
-			}while(!nueva);
-			
-		}
-		return listaSeleccionada;
-	}
-	
-	private static ArrayList<String> obtenerPalabras2(HashMap<String, String> diccionario, int numPalabras) {
-		
-	
-	 List <String> resu= new ArrayList<String>(diccionario.keySet());
-	 Collections.shuffle(resu);
-	 
-	 resu=resu.subList(0, numPalabras);
-	 return new ArrayList <String>(resu);
 	}
 
 }
